@@ -1,0 +1,27 @@
+name: Reproduce tsgolint await-thenable false positive
+
+on: [push, pull_request]
+
+jobs:
+  typecheck:
+    name: "TypeScript type-check (passes)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run typecheck
+        # Valid TypeScript. This job passes.
+
+  lint-false-positive:
+    name: "OxLint tsgolint@0.17.3 (expected to fail — shows false positive)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run lint
+        # Fails with typescript/await-thenable on both await using lines.
+        # TypeScript accepts this code (see job above).
+        # Trigger: tests/ is not in tsconfig "include".
+        # Fix: https://github.com/oxc-project/tsgolint/pull/822
