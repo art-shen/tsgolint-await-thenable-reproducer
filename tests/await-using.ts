@@ -1,4 +1,4 @@
-// Reproducer for: https://github.com/oxc-project/tsgolint/issues/XXX
+// Reproducer for: https://github.com/oxc-project/tsgolint/issues/830
 // Related fix:    https://github.com/oxc-project/tsgolint/pull/822
 //
 // tsc --noEmit:        passes — TypeScript accepts all patterns below
